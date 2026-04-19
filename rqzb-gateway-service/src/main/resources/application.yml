@@ -1,0 +1,30 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: rqzb-gateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+      routes:
+        - id: rqzb-auth-service
+          uri: http://localhost:9001
+          predicates:
+            - Path=/api/auth/**
+        - id: rqzb-system-service
+          uri: http://localhost:9002
+          predicates:
+            - Path=/api/system/**
+        - id: rqzb-renqing-service
+          uri: http://localhost:9003
+          predicates:
+            - Path=/api/renqing/**

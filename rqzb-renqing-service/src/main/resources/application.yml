@@ -30,6 +30,7 @@ sa-token:
   is-concurrent: true
   is-share: true
   token-style: uuid
+  jwt-secret-key: ${RQZB_JWT_SECRET:rqzb-local-dev-jwt-secret-change-me}
   is-log: true
 
 rqzb:

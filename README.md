@@ -5,6 +5,7 @@ Spring Cloud multi-module backend with MyBatis-Plus, MySQL, Lombok, and Sa-Token
 ## Modules
 
 - `rqzb-common`: shared DTOs and utilities
+- `rqzb-gateway-service`: API gateway, default port `9000`
 - `rqzb-auth-service`: auth service, default port `9001`
 - `rqzb-system-service`: system service, default port `9002`
 - `rqzb-renqing-service`: renqing and gift business service, default port `9003`
@@ -36,6 +37,10 @@ password: admin123
 Start one service:
 
 ```bash
+mvn -pl rqzb-gateway-service spring-boot:run
+```
+
+```bash
 mvn -pl rqzb-auth-service -am spring-boot:run
 ```
 
@@ -50,10 +55,33 @@ mvn -pl rqzb-renqing-service -am spring-boot:run
 Health checks:
 
 ```text
+GET http://localhost:9000/api/auth/health
 GET http://localhost:9001/api/auth/health
 GET http://localhost:9002/api/system/health
 GET http://localhost:9003/api/renqing/health
 ```
+
+Gateway routes:
+
+```text
+http://localhost:9000/api/auth/**    -> http://localhost:9001/api/auth/**
+http://localhost:9000/api/system/**  -> http://localhost:9002/api/system/**
+http://localhost:9000/api/renqing/** -> http://localhost:9003/api/renqing/**
+```
+
+Auth tokens are stateless Sa-Token JWT tokens. All services must use the same
+`RQZB_JWT_SECRET` value. The local default is shared for development, but set a
+real secret in production.
+
+After login, send the returned token with either header:
+
+```text
+satoken: <token>
+Authorization: Bearer <token>
+```
+
+`Authorization: Bearer <token>` is normalized by the gateway to the `satoken`
+header expected by the services.
 
 ## Basic APIs
 

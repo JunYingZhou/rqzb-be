@@ -20,6 +20,7 @@
 
     <modules>
         <module>rqzb-common</module>
+        <module>rqzb-gateway-service</module>
         <module>rqzb-auth-service</module>
         <module>rqzb-system-service</module>
         <module>rqzb-renqing-service</module>
