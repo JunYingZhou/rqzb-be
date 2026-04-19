@@ -1,0 +1,45 @@
+package com.rqzb.auth.exception;
+
+import cn.dev33.satoken.exception.NotLoginException;
+import com.rqzb.common.ApiResponse;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class AuthExceptionHandler {
+
+    @ExceptionHandler(NotLoginException.class)
+    public ApiResponse<Void> handleNotLogin(NotLoginException ex) {
+        return ApiResponse.fail(401, "请先登录");
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ApiResponse<Void> handleIllegalArgument(IllegalArgumentException ex) {
+        return ApiResponse.fail(400, ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ApiResponse<Void> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(error -> error.getDefaultMessage() == null ? "参数错误" : error.getDefaultMessage())
+                .orElse("参数错误");
+        return ApiResponse.fail(400, message);
+    }
+
+    @ExceptionHandler(BindException.class)
+    public ApiResponse<Void> handleBind(BindException ex) {
+        String message = ex.getFieldErrors().stream()
+                .findFirst()
+                .map(error -> error.getDefaultMessage() == null ? "参数错误" : error.getDefaultMessage())
+                .orElse("参数错误");
+        return ApiResponse.fail(400, message);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ApiResponse<Void> handleException(Exception ex) {
+        return ApiResponse.fail(ex.getMessage());
+    }
+}
