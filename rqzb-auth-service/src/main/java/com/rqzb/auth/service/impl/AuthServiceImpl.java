@@ -1,6 +1,7 @@
 package com.rqzb.auth.service.impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.rqzb.auth.dto.CurrentUserResponse;
@@ -13,6 +14,7 @@ import com.rqzb.auth.mapper.SysLoginLogMapper;
 import com.rqzb.auth.mapper.SysUserMapper;
 import com.rqzb.auth.service.AuthService;
 import com.rqzb.common.PasswordUtils;
+import com.rqzb.common.context.UserInfoHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,9 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("用户名或密码错误");
         }
 
-        StpUtil.login(user.getId());
+        StpUtil.login(user.getId(), SaLoginModel.create()
+                .setExtra(UserInfoHeaders.CLAIM_USERNAME, user.getUsername())
+                .setExtra(UserInfoHeaders.CLAIM_NICKNAME, user.getNickname()));
         String ip = getClientIp(servletRequest);
         userMapper.update(null, Wrappers.<SysUser>lambdaUpdate()
                 .set(SysUser::getLoginIp, ip)
