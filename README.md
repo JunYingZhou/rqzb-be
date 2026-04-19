@@ -119,4 +119,5 @@ GET    http://localhost:9003/api/renqing/gift-record-views/page
 GET    http://localhost:9003/api/renqing/gift-record-views/person/{personId}
 GET    http://localhost:9003/api/renqing/summary/yearly
 GET    http://localhost:9003/api/renqing/summary/yearly/{year}
+GET    http://localhost:9003/api/renqing/thread-pool/example
 ```
