@@ -1,5 +1,6 @@
 package com.rqzb.renqing.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import com.rqzb.common.ApiResponse;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +9,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class RenqingExceptionHandler {
+
+    @ExceptionHandler(NotLoginException.class)
+    public ApiResponse<Void> handleNotLogin(NotLoginException ex) {
+        return ApiResponse.fail(401, "please login");
+    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ApiResponse<Void> handleIllegalArgument(IllegalArgumentException ex) {
