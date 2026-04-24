@@ -3,7 +3,7 @@ package com.rqzb.system;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(properties = "rqzb.ai.enabled=false")
 class RqzbSystemApplicationTests {
 
     @Test
