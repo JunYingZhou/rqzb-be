@@ -2,6 +2,7 @@ package com.rqzb.ai.config;
 
 import com.rqzb.ai.service.RqzbAiChatService;
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
@@ -16,6 +17,7 @@ class RqzbAiConfigurationTest {
     void shouldNotCreateAiBeansWhenDisabled() {
         contextRunner.run(context -> {
             assertThat(context).doesNotHaveBean(ChatModel.class);
+            assertThat(context).doesNotHaveBean(StreamingChatModel.class);
             assertThat(context).doesNotHaveBean(RqzbAiChatService.class);
         });
     }
@@ -31,6 +33,7 @@ class RqzbAiConfigurationTest {
                         "rqzb.ai.timeout=15s")
                 .run(context -> {
                     assertThat(context).hasSingleBean(ChatModel.class);
+                    assertThat(context).hasSingleBean(StreamingChatModel.class);
                     assertThat(context).hasSingleBean(RqzbAiChatService.class);
                 });
     }

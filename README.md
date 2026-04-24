@@ -114,8 +114,9 @@ rqzb:
     log-responses: false
 ```
 
-After enabling the configuration, inject either `dev.langchain4j.model.chat.ChatModel`
-or `com.rqzb.ai.service.RqzbAiChatService` in your business service.
+After enabling the configuration, inject `dev.langchain4j.model.chat.ChatModel`,
+`dev.langchain4j.model.chat.StreamingChatModel`, or
+`com.rqzb.ai.service.RqzbAiChatService` in your business service.
 
 `base-url` can also point to another region or another OpenAI-compatible
 platform if needed.
@@ -139,7 +140,7 @@ PUT    http://localhost:9002/api/system/users/{id}
 DELETE http://localhost:9002/api/system/users/{id}
 PUT    http://localhost:9002/api/system/users/{id}/roles
 PUT    http://localhost:9002/api/system/users/{id}/posts
-POST   http://localhost:9002/api/system/ai/chat
+POST   http://localhost:9002/api/system/ai/chat  (SSE stream)
 
 GET    http://localhost:9002/api/system/roles/page
 PUT    http://localhost:9002/api/system/roles/{id}/menus
@@ -155,7 +156,8 @@ Most system resources also support the same basic CRUD pattern:
 AI example request:
 
 ```bash
-curl -X POST "http://localhost:9002/api/system/ai/chat" \
+curl -N -X POST "http://localhost:9002/api/system/ai/chat" \
+  -H "Accept: text/event-stream" \
   -H "Content-Type: application/json" \
   -d "{\"message\":\"Introduce this system in one sentence.\"}"
 ```
