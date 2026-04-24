@@ -28,6 +28,10 @@ spring:
           uri: http://localhost:9003
           predicates:
             - Path=/api/renqing/**
+        - id: rqzb-userinfo-service
+          uri: http://localhost:9004
+          predicates:
+            - Path=/api/userinfo/**
 
 sa-token:
   jwt-secret-key: ${RQZB_JWT_SECRET:rqzb-local-dev-jwt-secret-change-me}

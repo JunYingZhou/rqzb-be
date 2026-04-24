@@ -25,6 +25,7 @@
         <module>rqzb-auth-service</module>
         <module>rqzb-system-service</module>
         <module>rqzb-renqing-service</module>
+        <module>rqzb-userinfo-service</module>
     </modules>
 
     <properties>

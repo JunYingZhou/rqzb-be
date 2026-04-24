@@ -9,6 +9,7 @@ Spring Cloud multi-module backend with MyBatis-Plus, MySQL, Lombok, and Sa-Token
 - `rqzb-auth-service`: auth service, default port `9001`
 - `rqzb-system-service`: system service, default port `9002`
 - `rqzb-renqing-service`: renqing and gift business service, default port `9003`
+- `rqzb-userinfo-service`: user info service, default port `9004`
 
 ## Requirements
 
@@ -52,6 +53,10 @@ mvn -pl rqzb-system-service -am spring-boot:run
 mvn -pl rqzb-renqing-service -am spring-boot:run
 ```
 
+```bash
+mvn -pl rqzb-userinfo-service -am spring-boot:run
+```
+
 Health checks:
 
 ```text
@@ -59,6 +64,7 @@ GET http://localhost:9000/api/auth/health
 GET http://localhost:9001/api/auth/health
 GET http://localhost:9002/api/system/health
 GET http://localhost:9003/api/renqing/health
+GET http://localhost:9004/api/userinfo/health
 ```
 
 Gateway routes:
@@ -67,6 +73,7 @@ Gateway routes:
 http://localhost:9000/api/auth/**    -> http://localhost:9001/api/auth/**
 http://localhost:9000/api/system/**  -> http://localhost:9002/api/system/**
 http://localhost:9000/api/renqing/** -> http://localhost:9003/api/renqing/**
+http://localhost:9000/api/userinfo/** -> http://localhost:9004/api/userinfo/**
 ```
 
 Auth tokens are stateless Sa-Token JWT tokens. All services must use the same
@@ -190,4 +197,12 @@ GET    http://localhost:9003/api/renqing/gift-record-views/person/{personId}
 GET    http://localhost:9003/api/renqing/summary/yearly
 GET    http://localhost:9003/api/renqing/summary/yearly/{year}
 GET    http://localhost:9003/api/renqing/thread-pool/example
+```
+
+UserInfo service:
+
+```text
+GET http://localhost:9004/api/userinfo/health
+GET http://localhost:9004/api/userinfo/me
+GET http://localhost:9004/api/userinfo/{id}
 ```
