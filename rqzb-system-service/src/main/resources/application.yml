@@ -35,7 +35,7 @@ sa-token:
 
 rqzb:
   ai:
-    enabled: ${RQZB_AI_ENABLED:false}
+    enabled: ${RQZB_AI_ENABLED:true}
     api-key: ${DASHSCOPE_API_KEY:}
     base-url: ${RQZB_AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
     chat-model: ${RQZB_AI_CHAT_MODEL:qwen-plus}
