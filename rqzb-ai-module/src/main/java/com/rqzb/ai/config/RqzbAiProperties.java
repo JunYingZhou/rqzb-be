@@ -9,11 +9,11 @@ public class RqzbAiProperties {
 
     private boolean enabled;
 
-    private String baseUrl = "https://api.openai.com/v1";
+    private String baseUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1";
 
     private String apiKey;
 
-    private String chatModel = "gpt-4o-mini";
+    private String chatModel = "qwen-plus";
 
     private Duration timeout = Duration.ofSeconds(30);
 

@@ -36,9 +36,9 @@ sa-token:
 rqzb:
   ai:
     enabled: ${RQZB_AI_ENABLED:false}
-    api-key: ${OPENAI_API_KEY:}
-    base-url: ${RQZB_AI_BASE_URL:https://api.openai.com/v1}
-    chat-model: ${RQZB_AI_CHAT_MODEL:gpt-4o-mini}
+    api-key: ${DASHSCOPE_API_KEY:}
+    base-url: ${RQZB_AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    chat-model: ${RQZB_AI_CHAT_MODEL:qwen-plus}
     timeout: ${RQZB_AI_TIMEOUT:30s}
     log-requests: false
     log-responses: false

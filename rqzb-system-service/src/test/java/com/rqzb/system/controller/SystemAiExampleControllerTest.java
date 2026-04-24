@@ -21,33 +21,34 @@ class SystemAiExampleControllerTest {
         ApiResponse<AiChatResponse> response = controller.chat(new AiChatRequest("   "));
 
         assertThat(response.getCode()).isEqualTo(400);
-        assertThat(response.getMessage()).isEqualTo("message不能为空");
+        assertThat(response.getMessage()).isEqualTo("message must not be blank");
     }
 
     @Test
     void shouldReturn503WhenAiDisabled() {
         SystemAiExampleController controller = new SystemAiExampleController(mockProvider(null), aiProperties());
 
-        ApiResponse<AiChatResponse> response = controller.chat(new AiChatRequest("你好"));
+        ApiResponse<AiChatResponse> response = controller.chat(new AiChatRequest("hello"));
 
         assertThat(response.getCode()).isEqualTo(503);
-        assertThat(response.getMessage()).contains("AI模块未启用");
+        assertThat(response.getMessage()).contains("DASHSCOPE_API_KEY");
     }
 
     @Test
     void shouldReturnAnswerWhenAiEnabled() {
         RqzbAiChatService aiChatService = mock(RqzbAiChatService.class);
-        when(aiChatService.chat("介绍一下这个系统")).thenReturn("这是一个基于 Spring Cloud 的多模块后端系统。");
+        when(aiChatService.chat("Introduce this system briefly."))
+                .thenReturn("This is a Spring Cloud multi-module backend system.");
 
         SystemAiExampleController controller = new SystemAiExampleController(mockProvider(aiChatService), aiProperties());
 
-        ApiResponse<AiChatResponse> response = controller.chat(new AiChatRequest("介绍一下这个系统"));
+        ApiResponse<AiChatResponse> response = controller.chat(new AiChatRequest("Introduce this system briefly."));
 
         assertThat(response.getCode()).isEqualTo(200);
         assertThat(response.getData()).isNotNull();
-        assertThat(response.getData().getModel()).isEqualTo("gpt-4o-mini");
-        assertThat(response.getData().getMessage()).isEqualTo("介绍一下这个系统");
-        assertThat(response.getData().getAnswer()).isEqualTo("这是一个基于 Spring Cloud 的多模块后端系统。");
+        assertThat(response.getData().getModel()).isEqualTo("qwen-plus");
+        assertThat(response.getData().getMessage()).isEqualTo("Introduce this system briefly.");
+        assertThat(response.getData().getAnswer()).isEqualTo("This is a Spring Cloud multi-module backend system.");
     }
 
     @SuppressWarnings("unchecked")
@@ -59,7 +60,7 @@ class SystemAiExampleControllerTest {
 
     private static RqzbAiProperties aiProperties() {
         RqzbAiProperties properties = new RqzbAiProperties();
-        properties.setChatModel("gpt-4o-mini");
+        properties.setChatModel("qwen-plus");
         return properties;
     }
 }

@@ -26,8 +26,8 @@ class RqzbAiConfigurationTest {
                 .withPropertyValues(
                         "rqzb.ai.enabled=true",
                         "rqzb.ai.api-key=test-key",
-                        "rqzb.ai.chat-model=gpt-4o-mini",
-                        "rqzb.ai.base-url=https://api.openai.com/v1",
+                        "rqzb.ai.chat-model=qwen-plus",
+                        "rqzb.ai.base-url=https://dashscope.aliyuncs.com/compatible-mode/v1",
                         "rqzb.ai.timeout=15s")
                 .run(context -> {
                     assertThat(context).hasSingleBean(ChatModel.class);
@@ -40,7 +40,7 @@ class RqzbAiConfigurationTest {
         contextRunner
                 .withPropertyValues(
                         "rqzb.ai.enabled=true",
-                        "rqzb.ai.chat-model=gpt-4o-mini")
+                        "rqzb.ai.chat-model=qwen-plus")
                 .run(context -> {
                     assertThat(context).hasFailed();
                     assertThat(context.getStartupFailure())

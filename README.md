@@ -90,15 +90,18 @@ project-local Spring configuration. This avoids forcing a Spring Boot upgrade
 while still making AI capabilities available to every service that depends on
 `rqzb-common`.
 
+The default provider is now Qwen through Alibaba Cloud DashScope's
+OpenAI-compatible endpoint.
+
 Enable it in the service that needs AI:
 
 ```yaml
 rqzb:
   ai:
     enabled: true
-    api-key: ${OPENAI_API_KEY}
-    base-url: https://api.openai.com/v1
-    chat-model: gpt-4o-mini
+    api-key: ${DASHSCOPE_API_KEY}
+    base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    chat-model: qwen-plus
     timeout: 30s
     log-requests: false
     log-responses: false
@@ -107,8 +110,8 @@ rqzb:
 After enabling the configuration, inject either `dev.langchain4j.model.chat.ChatModel`
 or `com.rqzb.ai.service.RqzbAiChatService` in your business service.
 
-`base-url` can also point to an OpenAI-compatible platform if you are not using
-OpenAI directly.
+`base-url` can also point to another region or another OpenAI-compatible
+platform if needed.
 
 ## Basic APIs
 
@@ -147,10 +150,10 @@ AI example request:
 ```bash
 curl -X POST "http://localhost:9002/api/system/ai/chat" \
   -H "Content-Type: application/json" \
-  -d "{\"message\":\"请用一句话介绍这个系统\"}"
+  -d "{\"message\":\"Introduce this system in one sentence.\"}"
 ```
 
-The system service example reads `RQZB_AI_ENABLED`, `OPENAI_API_KEY`,
+The system service example reads `RQZB_AI_ENABLED`, `DASHSCOPE_API_KEY`,
 `RQZB_AI_BASE_URL`, `RQZB_AI_CHAT_MODEL`, and `RQZB_AI_TIMEOUT`.
 
 Renqing service:

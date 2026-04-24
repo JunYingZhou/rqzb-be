@@ -29,12 +29,12 @@ public class SystemAiExampleController {
     @PostMapping("/chat")
     public ApiResponse<AiChatResponse> chat(@RequestBody(required = false) AiChatRequest request) {
         if (request == null || !StringUtils.hasText(request.getMessage())) {
-            return ApiResponse.fail(400, "message不能为空");
+            return ApiResponse.fail(400, "message must not be blank");
         }
 
         RqzbAiChatService aiChatService = aiChatServiceProvider.getIfAvailable();
         if (aiChatService == null) {
-            return ApiResponse.fail(503, "AI模块未启用，请先配置 rqzb.ai.enabled=true 和 OPENAI_API_KEY");
+            return ApiResponse.fail(503, "AI module is disabled. Configure rqzb.ai.enabled=true and DASHSCOPE_API_KEY first.");
         }
 
         String message = request.getMessage().trim();
