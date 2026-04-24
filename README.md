@@ -83,6 +83,33 @@ Authorization: Bearer <token>
 `Authorization: Bearer <token>` is normalized by the gateway to the `satoken`
 header expected by the services.
 
+## AI Module
+
+The project now includes `rqzb-ai-module`, which wraps `langchain4j` in a
+project-local Spring configuration. This avoids forcing a Spring Boot upgrade
+while still making AI capabilities available to every service that depends on
+`rqzb-common`.
+
+Enable it in the service that needs AI:
+
+```yaml
+rqzb:
+  ai:
+    enabled: true
+    api-key: ${OPENAI_API_KEY}
+    base-url: https://api.openai.com/v1
+    chat-model: gpt-4o-mini
+    timeout: 30s
+    log-requests: false
+    log-responses: false
+```
+
+After enabling the configuration, inject either `dev.langchain4j.model.chat.ChatModel`
+or `com.rqzb.ai.service.RqzbAiChatService` in your business service.
+
+`base-url` can also point to an OpenAI-compatible platform if you are not using
+OpenAI directly.
+
 ## Basic APIs
 
 Auth service:
@@ -102,6 +129,7 @@ PUT    http://localhost:9002/api/system/users/{id}
 DELETE http://localhost:9002/api/system/users/{id}
 PUT    http://localhost:9002/api/system/users/{id}/roles
 PUT    http://localhost:9002/api/system/users/{id}/posts
+POST   http://localhost:9002/api/system/ai/chat
 
 GET    http://localhost:9002/api/system/roles/page
 PUT    http://localhost:9002/api/system/roles/{id}/menus
@@ -113,6 +141,17 @@ GET    http://localhost:9002/api/system/dict-data/type/{dictType}
 
 Most system resources also support the same basic CRUD pattern:
 `/page`, `/list`, `/{id}`, `POST`, `PUT /{id}`, and `DELETE /{id}`.
+
+AI example request:
+
+```bash
+curl -X POST "http://localhost:9002/api/system/ai/chat" \
+  -H "Content-Type: application/json" \
+  -d "{\"message\":\"请用一句话介绍这个系统\"}"
+```
+
+The system service example reads `RQZB_AI_ENABLED`, `OPENAI_API_KEY`,
+`RQZB_AI_BASE_URL`, `RQZB_AI_CHAT_MODEL`, and `RQZB_AI_TIMEOUT`.
 
 Renqing service:
 

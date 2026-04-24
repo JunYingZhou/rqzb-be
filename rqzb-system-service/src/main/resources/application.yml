@@ -34,6 +34,14 @@ sa-token:
   is-log: true
 
 rqzb:
+  ai:
+    enabled: ${RQZB_AI_ENABLED:false}
+    api-key: ${OPENAI_API_KEY:}
+    base-url: ${RQZB_AI_BASE_URL:https://api.openai.com/v1}
+    chat-model: ${RQZB_AI_CHAT_MODEL:gpt-4o-mini}
+    timeout: ${RQZB_AI_TIMEOUT:30s}
+    log-requests: false
+    log-responses: false
   thread-pool:
     core-size: 4
     max-size: 8
