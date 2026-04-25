@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Schema(description = "批量 ID 请求体")
+@Schema(description = "Batch ID request")
 public class IdsRequest {
 
-    @Schema(description = "ID 列表", example = "[1,2,3]")
+    @Schema(description = "List of IDs", example = "[1,2,3]")
     private List<Long> ids;
 }
