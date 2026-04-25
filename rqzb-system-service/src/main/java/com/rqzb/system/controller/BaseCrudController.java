@@ -24,26 +24,30 @@ public abstract class BaseCrudController<T> {
     }
 
     @GetMapping("/page")
-    public ApiResponse<PageResult<T>> page(PageQuery query) {
+    @Operation(summary = "分页查询")
+    public ApiResponse<PageResult<T>> page(@ParameterObject PageQuery query) {
         Page<T> page = service.page(new Page<>(query.getCurrent(), query.getSize()));
         return ApiResponse.ok(PageResult.of(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords()));
     }
 
     @GetMapping("/list")
+    @Operation(summary = "查询全部列表")
     public ApiResponse<List<T>> list() {
         return ApiResponse.ok(service.list());
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<T> detail(@PathVariable Long id) {
+    @Operation(summary = "按 ID 查询详情")
+    public ApiResponse<T> detail(@Parameter(description = "主键 ID") @PathVariable Long id) {
         T entity = service.getById(id);
         if (entity == null) {
-            return ApiResponse.fail(404, "数据不存在");
+            return ApiResponse.fail(404, "data not found");
         }
         return ApiResponse.ok(entity);
     }
 
     @PostMapping
+    @Operation(summary = "新增数据")
     public ApiResponse<T> create(@RequestBody T entity) {
         beforeCreate(entity);
         service.save(entity);
@@ -51,21 +55,24 @@ public abstract class BaseCrudController<T> {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<T> update(@PathVariable Long id, @RequestBody T entity) {
+    @Operation(summary = "按 ID 更新数据")
+    public ApiResponse<T> update(@Parameter(description = "主键 ID") @PathVariable Long id,
+                                 @RequestBody T entity) {
         setEntityId(entity, id);
         beforeUpdate(entity);
         boolean updated = service.updateById(entity);
         if (!updated) {
-            return ApiResponse.fail(404, "数据不存在");
+            return ApiResponse.fail(404, "data not found");
         }
         return ApiResponse.ok(entity);
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> delete(@PathVariable Long id) {
+    @Operation(summary = "按 ID 删除数据")
+    public ApiResponse<Void> delete(@Parameter(description = "主键 ID") @PathVariable Long id) {
         boolean removed = service.removeById(id);
         if (!removed) {
-            return ApiResponse.fail(404, "数据不存在");
+            return ApiResponse.fail(404, "data not found");
         }
         return ApiResponse.ok();
     }
@@ -81,7 +88,7 @@ public abstract class BaseCrudController<T> {
             Method setter = entity.getClass().getMethod("setId", Long.class);
             setter.invoke(entity, id);
         } catch (ReflectiveOperationException ex) {
-            throw new IllegalArgumentException("实体缺少 setId(Long) 方法");
+            throw new IllegalArgumentException("entity must provide setId(Long)");
         }
     }
 }

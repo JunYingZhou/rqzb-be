@@ -33,5 +33,19 @@ spring:
           predicates:
             - Path=/api/userinfo/**
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    urls:
+      - name: auth-service
+        url: /api/auth/v3/api-docs
+      - name: system-service
+        url: /api/system/v3/api-docs
+      - name: renqing-service
+        url: /api/renqing/v3/api-docs
+      - name: userinfo-service
+        url: /api/userinfo/v3/api-docs
+
 sa-token:
   jwt-secret-key: ${RQZB_JWT_SECRET:rqzb-local-dev-jwt-secret-change-me}

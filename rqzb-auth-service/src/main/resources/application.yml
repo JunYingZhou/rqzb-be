@@ -10,6 +10,10 @@ spring:
     username: root
     password: "075454"
 
+springdoc:
+  api-docs:
+    path: /api/auth/v3/api-docs
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.rqzb.auth.entity
