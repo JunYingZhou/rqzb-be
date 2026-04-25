@@ -12,6 +12,11 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
-                .addPathPatterns("/api/renqing/**");
+                .addPathPatterns("/api/renqing/**")
+                .excludePathPatterns(
+                        "/api/renqing/health",
+                        "/api/renqing/v3/api-docs",
+                        "/api/renqing/v3/api-docs/**"
+                );
     }
 }
