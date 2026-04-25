@@ -36,7 +36,7 @@ sa-token:
 rqzb:
   ai:
     enabled: ${RQZB_AI_ENABLED:true}
-    api-key: ${DASHSCOPE_API_KEY:}
+    api-key: ${DASHSCOPE_API_KEY:sk-7c88a82e5a8347c5bb29fcd11db0932b}
     base-url: ${RQZB_AI_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
     chat-model: ${RQZB_AI_CHAT_MODEL:qwen-plus}
     timeout: ${RQZB_AI_TIMEOUT:30s}
