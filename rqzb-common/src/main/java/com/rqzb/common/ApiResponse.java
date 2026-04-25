@@ -8,16 +8,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "统一响应体")
+@Schema(description = "Unified API response")
 public class ApiResponse<T> {
 
-    @Schema(description = "业务状态码", example = "200")
+    @Schema(description = "Business status code", example = "200")
     private Integer code;
 
-    @Schema(description = "响应消息", example = "success")
+    @Schema(description = "Response message", example = "success")
     private String message;
 
-    @Schema(description = "响应数据")
+    @Schema(description = "Response payload")
     private T data;
 
     public static <T> ApiResponse<T> ok(T data) {

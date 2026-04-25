@@ -10,19 +10,19 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "分页结果")
+@Schema(description = "Pagination result")
 public class PageResult<T> {
 
-    @Schema(description = "当前页码", example = "1")
+    @Schema(description = "Current page number", example = "1")
     private Long current;
 
-    @Schema(description = "每页条数", example = "10")
+    @Schema(description = "Page size", example = "10")
     private Long size;
 
-    @Schema(description = "总记录数", example = "128")
+    @Schema(description = "Total count", example = "128")
     private Long total;
 
-    @Schema(description = "当前页记录")
+    @Schema(description = "Current page records")
     private List<T> records;
 
     public static <T> PageResult<T> of(Long current, Long size, Long total, List<T> records) {
